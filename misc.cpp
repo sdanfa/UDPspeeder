@@ -563,6 +563,7 @@ void process_arg(int argc, char *argv[]) {
             {"mode", required_argument, 0, 1},
             {"timeout", required_argument, 0, 1},
             {"decode-buf", required_argument, 0, 1},
+            {"fwmark", required_argument, 0, 1},
             {"queue-len", required_argument, 0, 'q'},
             {"fec", required_argument, 0, 'f'},
             {"jitter", required_argument, 0, 'j'},
@@ -771,6 +772,13 @@ void process_arg(int argc, char *argv[]) {
                     sscanf(optarg, "%d", &fec_buff_num);
                     if (fec_buff_num < 300 || fec_buff_num > 20000) {
                         mylog(log_fatal, "decode-buf value must be between 300 and 20000 (kbyte) \n");
+                        myexit(-1);
+                    }
+                    mylog(log_info, "decode-buf=%d\n", fec_buff_num);
+                } else if (strcmp(long_options[option_index].name, "fwmark") == 0) {
+                    sscanf(optarg, "%d", &fwmark_num);
+                    if (fwmark_num < 0 || fwmark_num > 10) {
+                        mylog(log_fatal, "fwmark value must be between 0 and 10 \n");
                         myexit(-1);
                     }
                     mylog(log_info, "decode-buf=%d\n", fec_buff_num);
