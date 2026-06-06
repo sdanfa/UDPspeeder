@@ -776,8 +776,10 @@ void process_arg(int argc, char *argv[]) {
                     }
                     mylog(log_info, "decode-buf=%d\n", fec_buff_num);
                 } else if (strcmp(long_options[option_index].name, "fwmark") == 0) {
-                    sscanf(optarg, "%d", &fwmark_num);
-                    if (fwmark_num < 0 || fwmark_num > 10) {
+                    unsigned int fwmark_num_tmp = 0;
+                    sscanf(optarg, "%d", &fwmark_num_tmp);
+                    //Re-route function to common.c for processing by set_socket_mark
+                    if (fwmark_num_tmp < 0 || fwmark_num_tmp > 10) {
                         mylog(log_fatal, "fwmark value must be between 0 and 10 \n");
                         myexit(-1);
                     }
