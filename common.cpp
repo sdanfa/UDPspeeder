@@ -646,7 +646,7 @@ int set_buf_size(int fd, int socket_buf_size) {
     return 0;
 }
 
-int set_socket_mark(int fd, unsigned int mark_number)
+int set_socket_mark(int fd, uint32_t mark_number)
 {
     if (setsockopt(sockfd, SOL_SOCKET, SO_MARK, &mark_number, sizeof(mark_number)) < 0) {
         mylog(log_fatal, "SO_MARK Failed");
