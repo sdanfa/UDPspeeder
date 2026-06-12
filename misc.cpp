@@ -787,7 +787,7 @@ void process_arg(int argc, char *argv[]) {
                     //    mylog(log_fatal, "fwmark value must be between 0 and 10 \n");
                     //    myexit(-1);
                     //}
-                    mylog(log_info, "fwmark_num_tmp=%d\n", fwmark_num_tmp);
+                    mylog(log_info, "fwmark_num=%d\n", fwmark_num);
                 } else if (strcmp(long_options[option_index].name, "mode") == 0) {
                     sscanf(optarg, "%d", &g_fec_par.mode);
                     if (g_fec_par.mode != 0 && g_fec_par.mode != 1) {
