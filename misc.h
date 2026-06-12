@@ -75,4 +75,6 @@ extern char sub_net[100];
 extern u32_t sub_net_uint32;
 extern char tun_dev[100];
 
+extern uint32_t fwmark_num;
+
 #endif /* MISC_H_ */
