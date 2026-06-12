@@ -11,6 +11,8 @@
 #include <random>
 #include <cmath>
 
+#include "misc.h"
+
 int about_to_exit = 0;
 
 raw_mode_t raw_mode = mode_faketcp;
@@ -863,7 +865,9 @@ int new_listen_socket2(int &fd, address_t &addr) {
     setnonblocking(fd);
     set_buf_size(fd, socket_buf_size);
     //TEST FWMARK, set to 0x1
+    if (fwmark_num != 0) {
     set_socket_mark(fd, 0x1);
+    }
 
     mylog(log_debug, "local_listen_fd=%d\n", fd);
 
@@ -893,7 +897,9 @@ int new_connected_socket2(int &fd, address_t &addr, address_t *bind_addr, char *
     setnonblocking(fd);
     set_buf_size(fd, socket_buf_size);
     //TEST FWMARK, set to 0x1
+    if(fwmark_num != 0) {
     set_socket_mark(fd, 0x1);
+    }
 
     mylog(log_debug, "[%s]created new udp_fd %d\n", addr.get_str(), fd);
     int ret = connect(fd, (struct sockaddr *)&addr.inner, addr.get_len());
