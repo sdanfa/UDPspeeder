@@ -14,6 +14,7 @@ int mtu_warn = 1350;
 int disable_mtu_warn = 1;
 int disable_fec = 0;
 int disable_checksum = 0;
+int disable_fwmark = 1;
 
 int debug_force_flush_fec = 0;
 
@@ -778,6 +779,7 @@ void process_arg(int argc, char *argv[]) {
                     }
                     mylog(log_info, "decode-buf=%d\n", fec_buff_num);
                 } else if (strcmp(long_options[option_index].name, "fwmark") == 0) {
+                    disable_fwmark = 0;
                     sscanf(optarg, "%d", &fwmark_num);
                     //Re-route function to common.c for processing by set_socket_mark
                     //TODO: parsing code for 0x hex see if fits in uint32_t and compare fwmark_num_tmp
