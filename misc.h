@@ -21,6 +21,7 @@ extern int mtu_warn;
 extern int disable_mtu_warn;
 extern int disable_fec;
 extern int disable_checksum;
+extern int disable_fwmark;
 
 extern int debug_force_flush_fec;
 
