@@ -68,6 +68,7 @@ static void print_help() {
 #ifdef __linux__
     printf("    --out-interface       <string>        force all output packets of '-r' end to go through this interface.\n");
 #endif
+    printf("    --fwmark              <number>        hexadecimal value of fwmark such as 0xca6c:\n");
     printf("log and help options:\n");
     printf("    --log-level           <number>        0: never    1: fatal   2: error   3: warn \n");
     printf("                                          4: info (default)      5: debug   6: trace\n");
