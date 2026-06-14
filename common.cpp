@@ -11,6 +11,8 @@
 #include <random>
 #include <cmath>
 
+#include "misc.h"
+
 int about_to_exit = 0;
 
 raw_mode_t raw_mode = mode_faketcp;
@@ -646,6 +648,15 @@ int set_buf_size(int fd, int socket_buf_size) {
     return 0;
 }
 
+int set_socket_mark(int fd, uint32_t mark_number)
+{
+    if (setsockopt(fd, SOL_SOCKET, SO_MARK, &mark_number, sizeof(mark_number)) < 0) {
+        mylog(log_fatal, "SO_MARK fail");
+        myexit(1);
+    }
+    return 0;
+}
+
 void myexit(int a) {
     if (enable_log_color)
         printf("%s\n", RESET);
@@ -853,6 +864,9 @@ int new_listen_socket2(int &fd, address_t &addr) {
     }
     setnonblocking(fd);
     set_buf_size(fd, socket_buf_size);
+    if (disable_fwmark == 0) {
+        set_socket_mark(fd, fwmark_num);
+    }
 
     mylog(log_debug, "local_listen_fd=%d\n", fd);
 
