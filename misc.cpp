@@ -6,6 +6,7 @@
  */
 
 #include "misc.h"
+#include <inttypes.h>
 
 char fifo_file[1000] = "";
 
@@ -14,6 +15,7 @@ int mtu_warn = 1350;
 int disable_mtu_warn = 1;
 int disable_fec = 0;
 int disable_checksum = 0;
+int disable_fwmark = 1;
 
 int debug_force_flush_fec = 0;
 
@@ -55,6 +57,8 @@ int manual_set_tun = 0;
 int persist_tun = 0;
 
 char rs_par_str[rs_str_len] = "20:10";
+
+uint32_t fwmark_num;
 
 int from_normal_to_fec(conn_info_t &conn_info, char *data, int len, int &out_n, char **&out_arr, int *&out_len, my_time_t *&out_delay) {
     static my_time_t out_delay_buf[max_fec_packet_num + 100] = {0};
@@ -582,6 +586,7 @@ void process_arg(int argc, char *argv[]) {
             {"persist-tun", no_argument, 0, 1},
             {"manual-set-tun", no_argument, 0, 1},
             {"interval", required_argument, 0, 'i'},
+            {"fwmark", required_argument, 0, 1},
             {NULL, 0, 0, 0}};
     int option_index = 0;
     assert(g_fec_par.rs_from_str(rs_par_str) == 0);
@@ -774,6 +779,10 @@ void process_arg(int argc, char *argv[]) {
                         myexit(-1);
                     }
                     mylog(log_info, "decode-buf=%d\n", fec_buff_num);
+                } else if (strcmp(long_options[option_index].name, "fwmark") == 0) {
+                    disable_fwmark = 0;
+                    sscanf(optarg, "%x" SCNu32, &fwmark_num);
+                    mylog(log_info, "fwmark_num_tmp=%x\n", fwmark_num);
                 } else if (strcmp(long_options[option_index].name, "mode") == 0) {
                     sscanf(optarg, "%d", &g_fec_par.mode);
                     if (g_fec_par.mode != 0 && g_fec_par.mode != 1) {
