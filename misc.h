@@ -21,6 +21,7 @@ extern int mtu_warn;
 extern int disable_mtu_warn;
 extern int disable_fec;
 extern int disable_checksum;
+extern int disable_fwmark;
 
 extern int debug_force_flush_fec;
 
@@ -74,5 +75,6 @@ void process_arg(int argc, char *argv[]);
 extern char sub_net[100];
 extern u32_t sub_net_uint32;
 extern char tun_dev[100];
+extern uint32_t fwmark_num;
 
 #endif /* MISC_H_ */
